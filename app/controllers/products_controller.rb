@@ -3,15 +3,19 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @product = Product.new
+    if user_signed_in?
+      @product = Product.new
+    else
+      redirect_to new_user_session_path
+    end
   end
 
   def create
     begin
-      @product = Product.new(name: params["product"]["name"], category: params["product"]["category"], price: params["product"]["price"])
+      @product = Product.create(name: params["product"]["name"], category: params["product"]["category"], price: params["product"]["price"], status: true, user_id: current_user.id)
       if @product.save
         puts "Product Created"
-        redirect_to '/products'
+        redirect_to '/products?type=sell'
       else 
         render :new
       end
@@ -23,7 +27,16 @@ class ProductsController < ApplicationController
   end
 
   def index
-    @products = Product.all
+    # @products = Product.all
+    if user_signed_in?
+      if params[:type] == "buy"
+        @products = Product.where(status: true).where.not(user_id: current_user.id)
+      else
+        @products = Product.where(user_id: current_user.id)
+      end
+    else
+      redirect_to new_user_session_path
+    end
   end
 
   def show
@@ -47,6 +60,13 @@ class ProductsController < ApplicationController
   def destroy
     @product = Product.find(params[:id])
     @product.destroy! 
+
+    redirect_to '/products'
+  end
+
+  def buy
+    @product = Product.find(params[:id])
+    @product.update_attribute(:status, false)
 
     redirect_to '/products'
   end

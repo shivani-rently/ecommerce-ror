@@ -1,7 +1,6 @@
 class CreatePhotos < ActiveRecord::Migration[6.1]
   def change
     create_table :photos do |t|
-      t.blob :url
       t.references :product, null: false, foreign_key: true
 
       t.timestamps

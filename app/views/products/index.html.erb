@@ -3,4 +3,8 @@
     <a href='<%= "/products/#{product.id}"%>'> <%= product.name %></a><br>
 <% end %>
 <br>
-<%= link_to "Sell New Product", new_product_path %>
+<% if params[:type] == "sell" %>
+<%= link_to "Sell New Product", "/products/new" %>
+<br>
+<% end %>
+<%= link_to "Go Home", root_path %>

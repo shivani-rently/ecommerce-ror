@@ -1,5 +1,8 @@
 class ProductsController < ApplicationController
   def home
+    if user_signed_in?
+      @wallet = current_user.wallet
+    end
   end
 
   def new
@@ -32,7 +35,8 @@ class ProductsController < ApplicationController
       if params[:type] == "buy"
         @products = Product.where(status: true).where.not(user_id: current_user.id)
       else
-        @products = Product.where(user_id: current_user.id)
+        @user = current_user
+        @products = @user.products
       end
     else
       redirect_to new_user_session_path

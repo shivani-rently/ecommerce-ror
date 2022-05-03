@@ -1,5 +1,6 @@
 <% if user_signed_in? %>
     <div>Hello <%= current_user.name %>,</div>
+    <div>Your Wallet: <%= @wallet.coins %></div>
     <%= link_to "Sell", "/products?type=sell" %>
     <%= link_to "Buy", "/products?type=buy"%>
     <%= link_to "Log out", destroy_user_session_path, method: :delete %>

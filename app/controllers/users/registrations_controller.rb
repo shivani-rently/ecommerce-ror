@@ -2,6 +2,7 @@
 
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
+  # after_create :create_wallet, only: :create
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
@@ -13,6 +14,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     super
   end
+
+  # def create_wallet
+  #   @user = User.find(params["user"]["email"])
+  #   @wallet = @user.wallet.create(coins: 2000.0)
+  # end
 
   # GET /resource/edit
   # def edit

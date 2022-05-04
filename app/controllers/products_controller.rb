@@ -64,15 +64,13 @@ class ProductsController < ApplicationController
   def destroy
     @product = Product.find(params[:id])
     @product.destroy! 
-
-    redirect_to '/products'
+    redirect_to '/products?type=sell'
   end
 
   def buy
     @product = Product.find(params[:id])
     @product.update_attribute(:status, false)
-
-    redirect_to '/products'
+    redirect_to '/products?type=buy'
   end
 
   private

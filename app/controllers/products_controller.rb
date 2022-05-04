@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+   before_action :check_user, on: [:new, :index, :edit, :destroy, :buy]
   def home
     if user_signed_in?
       @wallet = current_user.wallet
@@ -6,11 +7,7 @@ class ProductsController < ApplicationController
   end
 
   def new
-    if user_signed_in?
-      @product = Product.new
-    else
-      redirect_to new_user_session_path
-    end
+    @product = Product.new
   end
 
   def create
@@ -31,15 +28,11 @@ class ProductsController < ApplicationController
 
   def index
     # @products = Product.all
-    if user_signed_in?
-      if params[:type] == "buy"
-        @products = Product.where(status: true).where.not(user_id: current_user.id)
-      else
-        @user = current_user
-        @products = @user.products
-      end
+    if params[:type] == "buy"
+      @products = Product.where(status: true).where.not(user_id: current_user.id)
     else
-      redirect_to new_user_session_path
+      @user = current_user
+      @products = @user.products
     end
   end
 
@@ -69,8 +62,17 @@ class ProductsController < ApplicationController
 
   def buy
     @product = Product.find(params[:id])
-    @product.update_attribute(:status, false)
-    redirect_to '/products?type=buy'
+    val = current_user.wallet.coins
+    if val < @product.price
+      redirect_to root_path, notice: "Wallet Doesn't Have Enough Coins"
+    else
+      current_user.wallet.update_attribute(:coins, val - @product.price)
+      @user = User.find_by(id: @product.user_id)
+      val = @user.wallet.coins
+      @user.wallet.update_attribute(:coins, val + @product.price)
+      @product.update_attribute(:status, false)
+      redirect_to '/products?type=buy'
+    end
   end
 
   private
@@ -78,4 +80,9 @@ class ProductsController < ApplicationController
       params.require(:product).permit(:name, :category, :price)
     end
 
+    def check_user
+      if !user_signed_in?
+        redirect_to new_user_session_path
+      end
+    end
 end

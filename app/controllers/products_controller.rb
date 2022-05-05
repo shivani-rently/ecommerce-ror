@@ -12,7 +12,7 @@ class ProductsController < ApplicationController
 
   def create
     begin
-      @product = Product.create(name: params["product"]["name"], category: params["product"]["category"], price: params["product"]["price"], status: true, user_id: current_user.id, quantity: params["product"]["quantity"])
+      @product = Product.create(name: params["product"]["name"], category: params["category"], price: params["product"]["price"], status: true, user_id: current_user.id, quantity: params["product"]["quantity"])
       if @product.save
         puts "Product Created"
         redirect_to '/products?type=sell'
@@ -44,8 +44,9 @@ class ProductsController < ApplicationController
   end
 
   def update
+    puts "Hello" 
+    puts params
     @product = Product.find(params[:id])
-
     if @product.update(product_params)
       redirect_to "/products/#{@product.id}"
     else
@@ -72,7 +73,7 @@ class ProductsController < ApplicationController
 
   private
     def product_params
-      params.require(:product).permit(:name, :category, :price, :quantity)
+      params.permit(:name, :category, :price, :quantity)
     end
 
     def check_user

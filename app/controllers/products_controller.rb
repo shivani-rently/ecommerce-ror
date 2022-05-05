@@ -12,7 +12,7 @@ class ProductsController < ApplicationController
 
   def create
     begin
-      @product = Product.create(name: params["product"]["name"], category: params["product"]["category"], price: params["product"]["price"], status: true, user_id: current_user.id)
+      @product = Product.create(name: params["product"]["name"], category: params["product"]["category"], price: params["product"]["price"], status: true, user_id: current_user.id, quantity: params["product"]["quantity"])
       if @product.save
         puts "Product Created"
         redirect_to '/products?type=sell'
@@ -30,9 +30,8 @@ class ProductsController < ApplicationController
     # @products = Product.all
     if params[:type] == "buy"
       @products = Product.where(status: true).where.not(user_id: current_user.id)
-    else
-      @user = current_user
-      @products = @user.products
+    elsif params[:type] == "sell"
+      @products = current_user.products.where(user_id: current_user.id)
     end
   end
 
@@ -66,23 +65,42 @@ class ProductsController < ApplicationController
     if val < @product.price
       redirect_to root_path, notice: "Wallet Doesn't Have Enough Coins"
     else
-      current_user.wallet.update_attribute(:coins, val - @product.price)
-      @user = User.find_by(id: @product.user_id)
-      val = @user.wallet.coins
-      @user.wallet.update_attribute(:coins, val + @product.price)
-      @product.update_attribute(:status, false)
-      redirect_to '/products?type=buy'
+      buy_product
+      create_order_history
     end
   end
 
   private
     def product_params
-      params.require(:product).permit(:name, :category, :price)
+      params.require(:product).permit(:name, :category, :price, :quantity)
     end
 
     def check_user
       if !user_signed_in?
         redirect_to new_user_session_path
       end
+    end
+
+    def buy_product
+      val = current_user.wallet.coins
+      current_user.wallet.update_attribute(:coins, val - @product.price)
+      @user = User.find_by(id: @product.user_id)
+      val = @user.wallet.coins
+      @user.wallet.update_attribute(:coins, val + @product.price)
+      @product.update_attribute(:quantity, @product.quantity - 1)
+      if @product.quantity == 0
+        @product.update_attribute(:status, false)
+      end
+    end
+
+    def create_order_history
+      @order = Order.find_by(user_id: current_user.id, product_id: @product.id)
+      if @order != nil
+        @order.update_attribute(:quantity, @order.quantity + 1)
+      else
+        @order = Order.create(quantity: 1, user_id: current_user.id, product_id: @product.id)
+        @order.save
+      end
+      redirect_to '/products?type=buy'
     end
 end

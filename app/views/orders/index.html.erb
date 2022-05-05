@@ -1,0 +1,8 @@
+<h1>Your Order History</h1>
+<% @orders.each do |order| %>
+   <div>Order Id: <%= order.id %></div>
+   <div>Product Id: <%= order.product_id %></div>
+   <div>Quantity: <%= order.quantity %></div><br>
+<% end %>
+<br>
+<%= link_to "Go Home", root_path %>

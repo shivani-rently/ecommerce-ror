@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   put "/products/:id/buy", to: "products#buy"
 
   resources :products
+  resources :orders
 end

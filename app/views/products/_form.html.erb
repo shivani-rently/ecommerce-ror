@@ -26,6 +26,14 @@
       <% end %>
   </div>
   <div>
+    <%= form.label :quantity %><br>
+    <%= form.text_field :quantity %>
+    <% @product.errors[:quantity].any? %>
+      <% @product.errors[:quantity].each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+  </div>
+  <div>
     <%= form.submit %>
   </div>
 <% end %>

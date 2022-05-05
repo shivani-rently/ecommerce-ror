@@ -1,0 +1,16 @@
+<h4><%= @product.name %></h4>
+<h4><%= @product.category %></h4>
+<h4><%= @product.price %></h4>
+<h4>Availability: <%= @product.quantity %></h4>
+<% if @product.status? %>
+    <div>Status: Not Sold Yet</div>
+    <%= button_to "Delete", "/products/#{@product.id}",
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } %>
+    <%= link_to "Edit", edit_product_path(@product) %>
+<% else %>
+    <div>Status: Sold</div>
+<% end %>
+<br>
+<br>
+<%= link_to "Go Back", "/products?type=sell" %>

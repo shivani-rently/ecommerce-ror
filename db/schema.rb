@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_05_091155) do
+ActiveRecord::Schema.define(version: 2022_05_05_105848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,16 @@ ActiveRecord::Schema.define(version: 2022_05_05_091155) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "feedbacks", force: :cascade do |t|
+    t.text "comment"
+    t.bigint "user_id", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_feedbacks_on_product_id"
+    t.index ["user_id"], name: "index_feedbacks_on_user_id"
+  end
+
   create_table "order_histories", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -56,13 +66,6 @@ ActiveRecord::Schema.define(version: 2022_05_05_091155) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["product_id"], name: "index_orders_on_product_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
-  end
-
-  create_table "photos", force: :cascade do |t|
-    t.bigint "product_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["product_id"], name: "index_photos_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -113,9 +116,10 @@ ActiveRecord::Schema.define(version: 2022_05_05_091155) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "feedbacks", "products"
+  add_foreign_key "feedbacks", "users"
   add_foreign_key "orders", "products"
   add_foreign_key "orders", "users"
-  add_foreign_key "photos", "products"
   add_foreign_key "products", "users"
   add_foreign_key "wallets", "users"
 end

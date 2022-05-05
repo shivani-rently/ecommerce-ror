@@ -39,6 +39,14 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
   end
 
+  def sell_details
+    @product = Product.find(params[:id])
+  end
+
+  def buy_details
+    @product = Product.find(params[:id])
+  end
+
   def edit
     @product = Product.find(params[:id])
   end
@@ -47,8 +55,8 @@ class ProductsController < ApplicationController
     puts "Hello" 
     puts params
     @product = Product.find(params[:id])
-    if @product.update(product_params)
-      redirect_to "/products/#{@product.id}"
+    if @product.update(name: params["product"]["name"], category: params["category"], price: params["product"]["price"], quantity: params["product"]["quantity"])
+      redirect_to "/products/#{@product.id}/sell"
     else
       render :edit
     end

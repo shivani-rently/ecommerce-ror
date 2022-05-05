@@ -1,0 +1,7 @@
+<h4><%= @product.name %></h4>
+<h4><%= @product.category %></h4>
+<h4><%= @product.price %></h4>
+<h4>Availability: <%= @product.quantity %></h4>
+<%= button_to "Buy", "/products/#{@product.id}/buy", method: :put %>
+<br>
+<%= link_to "Go Back", "/products?type=buy" %>

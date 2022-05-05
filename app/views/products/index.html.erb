@@ -1,6 +1,10 @@
-<h1>Your Products</h1>
+<h1>Products List</h1>
 <% @products.each do |product| %>
-    <a href='<%= "/products/#{product.id}"%>'> <%= product.name %></a><br>
+    <% if params[:type] == "buy" %>
+        <a href='<%= "/products/#{product.id}/buy" %>'> <%= product.name %></a><br>
+    <% elsif params[:type] == "sell" %>
+        <a href='<%= "/products/#{product.id}/sell" %>'> <%= product.name %></a><br>
+    <% end %>
 <% end %>
 <br>
 <% if params[:type] == "sell" %>

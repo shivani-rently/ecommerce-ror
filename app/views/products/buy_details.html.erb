@@ -1,4 +1,10 @@
 <%= render "product_details", product: @product %>
-<%= button_to "Buy", "/products/#{@product.id}/buy", method: :put %>
+<%= form_with url: "/products/#{@product.id}/buy", method: :put do |form| %>
+    <div>
+        <%= form.label :quantity %><br>
+        <%= form.text_field :quantity %><br>
+    </div>
+    <%= form.submit "Buy" %>
+<% end %>
 <br>
 <%= link_to "Go Back", "/products?type=buy" %>

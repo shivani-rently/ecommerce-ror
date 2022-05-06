@@ -14,20 +14,17 @@ class ProductsController < ApplicationController
     begin
       @product = Product.create(name: params["product"]["name"], category: params["category"], price: params["product"]["price"], status: true, user_id: current_user.id, quantity: params["product"]["quantity"])
       if @product.save
-        puts "Product Created"
         redirect_to '/products?type=sell'
       else 
         render :new
       end
     rescue => exception
-      puts "Failed To Created"
       puts exception
       render :new, status: :unprocessable_entity
     end
   end
 
   def index
-    # @products = Product.all
     if params[:type] == "buy"
       @products = Product.where(status: true).where.not(user_id: current_user.id)
     elsif params[:type] == "sell"
@@ -52,8 +49,6 @@ class ProductsController < ApplicationController
   end
 
   def update
-    puts "Hello" 
-    puts params
     @product = Product.find(params[:id])
     if @product.update(name: params["product"]["name"], category: params["category"], price: params["product"]["price"], quantity: params["product"]["quantity"])
       redirect_to "/products/#{@product.id}/sell"
@@ -69,13 +64,20 @@ class ProductsController < ApplicationController
   end
 
   def buy
+    quantity = params["quantity"]
     @product = Product.find(params[:id])
-    val = current_user.wallet.coins
-    if val < @product.price
-      redirect_to root_path, notice: "Wallet Doesn't Have Enough Coins"
+    if quantity.to_i > @product.quantity
+      flash.alert = "Required Quantity Not Available"
+      redirect_to "/products/#{@product.id}/buy"
     else
-      buy_product
-      create_order_history
+      val = current_user.wallet.coins * quantity.to_f
+      if val < @product.price
+        flash.alert = "Wallet Doesn't Have Enough Coins"
+        redirect_to "/products/#{@product.id}/buy"
+      else
+        buy_product quantity
+        create_order_history
+      end
     end
   end
 
@@ -90,13 +92,13 @@ class ProductsController < ApplicationController
       end
     end
 
-    def buy_product
+    def buy_product(quantity)
       val = current_user.wallet.coins
       current_user.wallet.update_attribute(:coins, val - @product.price)
       @user = User.find_by(id: @product.user_id)
       val = @user.wallet.coins
       @user.wallet.update_attribute(:coins, val + @product.price)
-      @product.update_attribute(:quantity, @product.quantity - 1)
+      @product.update_attribute(:quantity, @product.quantity - quantity.to_i)
       if @product.quantity == 0
         @product.update_attribute(:status, false)
       end

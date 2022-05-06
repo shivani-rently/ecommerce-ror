@@ -1,7 +1,4 @@
-<h4><%= @product.name %></h4>
-<h4><%= @product.category %></h4>
-<h4><%= @product.price %></h4>
-<h4>Availability: <%= @product.quantity %></h4>
+<%= render "product_details", product: @product %>
 <% if @product.status? %>
     <div>Status: Not Sold Yet</div>
     <%= button_to "Delete", "/products/#{@product.id}",

@@ -9,7 +9,6 @@ class User < ApplicationRecord
   has_many :products
   has_one :wallet
   has_many :orders, dependent: :destroy
-  # has_many :products, through: :orders
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 

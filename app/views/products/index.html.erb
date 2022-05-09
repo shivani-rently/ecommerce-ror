@@ -1,4 +1,6 @@
-<h1>Products List</h1>
+<div class="wrapper">
+<h3>Products List</h3>
+<div class="list-wrapper">
 <% @products.each do |product| %>
     <% if params[:type] == "buy" %>
         <a href='<%= "/products/#{product.id}/buy" %>'> <%= product.name %></a><br>
@@ -11,4 +13,4 @@
 <%= link_to "Sell New Product", "/products/new" %>
 <br>
 <% end %>
-<%= link_to "Go Home", root_path %>
+</div>

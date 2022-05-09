@@ -16,3 +16,35 @@
 
 // External libraries
 @import "bootstrap/scss/bootstrap";
+
+:root{
+    height: 100%;
+    width: 100%;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+.navbar {
+    padding: 10px;
+    width: 100%;
+}
+
+.spacer {
+    flex: 1;
+}
+
+.a-button {
+    background: none;
+    border: none;
+}
+
+#navbarColor01 {
+    width: 100%;
+}
+
+.active {
+    color: #fff;
+}

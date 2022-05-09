@@ -1,6 +1,4 @@
-<h1>Sell Your Product</h1>
-
-<%= render "form", product: @product %>
-
-
-<%= link_to "Go Back", "/products?type=sell" %>
+<div class="wrapper">
+<h3 style="text-align: center">Sell Your Product</h3>
+<%= render "form", product: @product, submit_text: "Sell Product" %>
+</div>

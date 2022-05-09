@@ -1,3 +1,4 @@
+<div class="form">
 <%= form_with model: @product do |form| %>
   <div>
     <%= form.label :name %><br>
@@ -10,8 +11,7 @@
 
   <div>
     <%= form.label :category %><br>
-    <%# <%= form.text_field :category  %>
-    <%= select_tag(:category, options_for_select(['Women Accessories','Electronics','Footwear','Electrical Appliances'],@product.category)) %>
+    <%= select_tag(:category, options_for_select(['Women Accessories','Electronics','Footwear','Electrical Appliances', 'School Supplies'],@product.category), {:class => 'dropdown'}) %>
     <% @product.errors[:category].any? %>
       <% @product.errors[:category].each do |message| %>
         <div><%= message %></div>
@@ -34,7 +34,8 @@
         <div><%= message %></div>
       <% end %>
   </div>
-  <div>
-    <%= form.submit %>
+  <div style="margin-top: 20px">
+    <%= form.submit submit_text %>
   </div>
 <% end %>
+</div>

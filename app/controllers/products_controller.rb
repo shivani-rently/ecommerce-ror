@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
-   before_action :check_user, on: [:new, :index, :edit, :destroy, :buy]
+  before_action :check_user, on: [:new, :index, :edit, :destroy, :buy]
+
   def home
     if user_signed_in?
       @wallet = current_user.wallet
@@ -12,9 +13,9 @@ class ProductsController < ApplicationController
 
   def create
     begin
-      @product = Product.create(name: params["product"]["name"], category: params["category"], price: params["product"]["price"], status: true, user_id: current_user.id, quantity: params["product"]["quantity"])
+      @product = Product.create(name: params["product"]["name"], category: params["category"], price: params["product"]["price"], status: true, user_id: current_user.id, quantity: params["product"]["quantity"], isAvailable: true)
       if @product.save
-        redirect_to '/products?type=sell'
+        redirect_to '/products/sell'
       else 
         render :new
       end
@@ -26,10 +27,14 @@ class ProductsController < ApplicationController
 
   def index
     if params[:type] == "buy"
-      @products = Product.where(status: true).where.not(user_id: current_user.id)
+      @products = Product.where(status: true, isAvailable: true).where.not(user_id: current_user.id)
     elsif params[:type] == "sell"
       @products = current_user.products.where(user_id: current_user.id)
     end
+  end
+
+  def sell_list
+    @products = current_user.products.where(user_id: current_user.id).where(isAvailable: true)
   end
 
   def show
@@ -50,7 +55,7 @@ class ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
-    if @product.update(name: params["product"]["name"], category: params["category"], price: params["product"]["price"], quantity: params["product"]["quantity"])
+    if @product.update(name: params["product"]["name"], category: params["category"], price: params["product"]["price"], quantity: params["product"]["quantity"], status: params["product"]["quantity"].to_i > 0)
       redirect_to "/products/#{@product.id}/sell"
     else
       render :edit
@@ -59,8 +64,9 @@ class ProductsController < ApplicationController
 
   def destroy
     @product = Product.find(params[:id])
-    @product.destroy! 
-    redirect_to '/products?type=sell'
+    @product.update_attribute(:isAvailable, false)
+    # @product.destroy! 
+    redirect_to '/products/sell'
   end
 
   def buy
@@ -76,7 +82,7 @@ class ProductsController < ApplicationController
         redirect_to "/products/#{@product.id}/buy"
       else
         buy_product quantity
-        create_order_history
+        create_order_history quantity
       end
     end
   end
@@ -94,24 +100,26 @@ class ProductsController < ApplicationController
 
     def buy_product(quantity)
       val = current_user.wallet.coins
-      current_user.wallet.update_attribute(:coins, val - @product.price)
+      price = @product.price * quantity.to_i
+      current_user.wallet.update_attribute(:coins, val - price)
       @user = User.find_by(id: @product.user_id)
       val = @user.wallet.coins
-      @user.wallet.update_attribute(:coins, val + @product.price)
+      @user.wallet.update_attribute(:coins, val + price)
       @product.update_attribute(:quantity, @product.quantity - quantity.to_i)
       if @product.quantity == 0
         @product.update_attribute(:status, false)
       end
     end
 
-    def create_order_history
+    def create_order_history(quantity)
       @order = Order.find_by(user_id: current_user.id, product_id: @product.id)
       if @order != nil
-        @order.update_attribute(:quantity, @order.quantity + 1)
+        @order.update_attribute(:quantity, @order.quantity + quantity.to_i)
       else
+        print @order.methods
         @order = Order.create(quantity: 1, user_id: current_user.id, product_id: @product.id)
         @order.save
       end
-      redirect_to '/products?type=buy'
+        redirect_to '/products?type=buy'
     end
 end

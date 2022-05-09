@@ -1,12 +1,5 @@
 <% if user_signed_in? %>
-<br><br>
-    <div>Hello <%= current_user.name %>,</div>
+<div class="container">
     <div>Your Wallet: <%= current_user.wallet.coins %></div>
-    <%= link_to "Sell", "/products?type=sell" %>
-    <%= link_to "Buy", "/products?type=buy"%>
-    <%= link_to "Order Histories", "/orders" %>
-    <%= button_to "Log out", destroy_user_session_path, method: :delete %>
-<% else %>
-<br><br><br>
-    <%= link_to "login", new_user_session_path %>
+</div>
 <% end %>

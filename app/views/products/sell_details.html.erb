@@ -1,13 +1,14 @@
+<div class="wrapper">
+<h3>Product Details</h3>
 <%= render "product_details", product: @product %>
 <% if @product.status? %>
     <div>Status: Not Sold Yet</div>
-    <%= button_to "Delete", "/products/#{@product.id}",
-                  method: :delete,
-                  data: { confirm: "Are you sure?" } %>
-    <%= link_to "Edit", edit_product_path(@product) %>
+    <%= button_to "Delete", "/products/#{@product.id}", method: :delete %>
 <% else %>
     <div>Status: Sold</div>
 <% end %>
+<%= link_to "Edit", edit_product_path(@product) %>
 <br>
 <br>
-<%= link_to "Go Back", "/products?type=sell" %>
+<%= link_to "Go Back", "/products/sell" %>
+</div>

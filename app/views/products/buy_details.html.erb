@@ -1,8 +1,8 @@
 <%= render "product_details", product: @product %>
 <%= form_with url: "/products/#{@product.id}/buy", method: :put do |form| %>
-    <div>
-        <%= form.label :quantity %><br>
-        <%= form.text_field :quantity %><br>
+    <div style="width: 340px; margin: 0 auto;">
+        <%= form.label "Quantity: ", class: 'labelName' %>
+        <%= form.text_field :quantity, class: 'fieldName' %><br>
     </div>
     <%= form.submit "Buy" %>
 <% end %>

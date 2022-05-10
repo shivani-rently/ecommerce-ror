@@ -72,7 +72,10 @@ class ProductsController < ApplicationController
   def buy
     quantity = params["quantity"]
     @product = Product.find(params[:id])
-    if quantity.to_i > @product.quantity
+    if quantity == ""
+      flash.alert = "Quantity Cannot Be Empty"
+      redirect_to "/products/#{@product.id}/buy"
+    elsif quantity.to_i > @product.quantity
       flash.alert = "Required Quantity Not Available"
       redirect_to "/products/#{@product.id}/buy"
     else

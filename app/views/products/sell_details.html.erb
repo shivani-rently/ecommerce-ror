@@ -2,13 +2,13 @@
 <h3>Product Details</h3>
 <%= render "product_details", product: @product %>
 <% if @product.status? %>
-    <div>Status: Not Sold Yet</div>
-    <%= button_to "Delete", "/products/#{@product.id}", method: :delete %>
+    <div class="detail" style="width: 340px; margin: 0 auto;">Status: <span>Not Sold Yet</span></div>
+    <div style="width: 340px; margin: 0 auto;"><%= button_to "Delete", "/products/#{@product.id}", method: :delete, class: 'link' %></div>
 <% else %>
-    <div>Status: Sold</div>
+    <div class="detail" style="width: 340px; margin: 0 auto;">Status: <span>Sold</span></div>
 <% end %>
-<%= link_to "Edit", edit_product_path(@product) %>
-<br>
-<br>
-<%= link_to "Go Back", "/products/sell" %>
+<div style="width: 340px; margin: 0 auto;">
+    <%= link_to "Edit", edit_product_path(@product), class: 'link' %><br>
+    <%= link_to "Go Back", "/products/sell", class: 'link' %>
+</div>
 </div>

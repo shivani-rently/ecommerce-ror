@@ -3,7 +3,11 @@
 <div class="list-wrapper">
 <% @products.each do |product| %>
     <% if params[:type] == "buy" %>
-        <a href='<%= "/products/#{product.id}/buy" %>'> <%= product.name %></a><br>
+        <div class="product">
+            <div class="detail">Product Name: <span><%= product.name %></span></div>
+            <div class="detail">Product Category: <span><%= product.category %></span></div>
+            <%= link_to "View Product Details",  "/products/#{product.id}/buy" %>
+        </div>
     <% elsif params[:type] == "sell" %>
         <a href='<%= "/products/#{product.id}/sell" %>'> <%= product.name %></a><br>
     <% end %>

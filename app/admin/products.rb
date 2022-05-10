@@ -14,7 +14,6 @@ ActiveAdmin.register Product do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
-
   form do |f|
     f.inputs :user, :name, :price, :quantity, :status, :isAvailable
     f.input :category,
@@ -23,4 +22,5 @@ ActiveAdmin.register Product do
         prompt:     false
     actions
   end
+  
 end

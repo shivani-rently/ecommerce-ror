@@ -3,11 +3,9 @@
   <head>
     <title>Project</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<%= stylesheet_link_tag 'application' %>
+<%# <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
   </head>
 
   <body>
@@ -27,13 +25,13 @@
       <li class="nav-item">
         <a class="nav-link" href="/products/sell">Sell History</a>
       </li>
-      <div class="spacer"></div>
+      <div class="spacer" style="flex:1;"></div>
       <% if user_signed_in? %>
     <li class="nav-item <%= active_class(edit_user_registration_path) %>">
       <%= link_to "Hi, #{current_user.name}", edit_user_registration_path, class: 'nav-link' %>
     </li>
     <li class="nav-item">
-      <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'nav-link a-button' %>
+      <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'nav-link a-button', style: 'background:none;border:none;' %>
     </li>
   <% else %>
     <li class="nav-item">

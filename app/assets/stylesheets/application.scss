@@ -17,6 +17,7 @@
 // External libraries
 @import "bootstrap/scss/bootstrap";
 
+
 :root{
     height: 100%;
     width: 100%;
@@ -25,6 +26,13 @@
 html, body {
     height: 100%;
     width: 100%;
+}
+
+.shared-links{
+    display: flex;
+    width: 257px;
+    margin: 0 auto;
+    justify-content: space-between;
 }
 
 .navbar {

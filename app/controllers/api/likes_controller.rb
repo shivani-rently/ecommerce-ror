@@ -13,7 +13,8 @@ class Api::LikesController < ApplicationController
     begin
       like = Like.find_by(product_id: params[:id], user_id: current_user.id)
       if like
-        destroy like
+        like.destroy
+        render json: {},status: 200
       else
         like = Like.create(user_id: current_user.id, product_id: params[:id])
         if like.save
@@ -21,7 +22,8 @@ class Api::LikesController < ApplicationController
         end
       end
     rescue => exception
-      render json: {error: "Error Occured"}
+      puts exception
+      render json: {error: exception}
     end
   end
 

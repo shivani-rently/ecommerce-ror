@@ -6,5 +6,10 @@
     </div>
     <%= form.submit "Buy" %>
 <% end %>
+<% if @like != [] %>
+<%= button_to "Unlike", "/api/likes", method: :post, params: {id: @product.id} %>
+<% else %>
+<%= button_to "Like", "/api/likes", method: :post, params: {id: @product.id} %>
+<% end %>
 <br>
 <%= link_to "Go Back", "/products?type=buy" %>

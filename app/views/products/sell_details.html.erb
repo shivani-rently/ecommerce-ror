@@ -3,11 +3,17 @@
 <%= render "product_details", product: @product %>
 <% if @product.status? %>
     <div class="detail" style="width: 340px; margin: 0 auto;">Status: <span>Not Sold Yet</span></div>
-    <div style="width: 340px; margin: 0 auto;"><%= button_to "Delete", "/products/#{@product.id}", method: :delete, class: 'link' %></div>
 <% else %>
     <div class="detail" style="width: 340px; margin: 0 auto;">Status: <span>Sold</span></div>
 <% end %>
 <div style="width: 340px; margin: 0 auto;">
+    <% if @product.feedbacks.count != 0 %>
+        <br><h4>Reviews</h4>
+        <%= render @product.feedbacks %>
+    <% end %>
+    <% if @product.status %>
+        <div style="width: 340px; margin: 0 auto;"><%= button_to "Delete", "/products/#{@product.id}", method: :delete, class: 'link' %></div>
+    <% end %>
     <%= link_to "Edit", edit_product_path(@product), class: 'link' %><br>
     <%= link_to "Go Back", "/products/sell", class: 'link' %>
 </div>

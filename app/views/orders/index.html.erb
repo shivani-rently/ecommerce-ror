@@ -1,12 +1,21 @@
 <div class="wrapper">
 <h3>Your Order History</h3>
-<div class="list-wrapper">
-<% @orders.each do |order| %>
-   <div>
-      <div>Order Id: <%= order.id %></div>
-      <div>Quantity: <%= order.quantity %></div>
-      <div><a href='<%= "/products/#{order.product_id}"%>'>View Product Details</a></div><br>
-   </div>
-<% end %>
+<% if @orders.count > 0 %>
+<div class="product-table">
+    <table>
+        <tr>
+            <th>Order Id</th>           
+            <th>Quantity</th>     
+            <th></th>
+        </tr>
+        <% @orders.each do |order| %>
+            <tr>
+                <td><%= order.id %></td>   
+                <td><%= order.quantity %></td>
+                <td><%= link_to "View", "/products/#{order.product_id}" %></td>
+            </tr>
+        <% end %>
+    </table>
 </div>
+<% end %>
 </div>

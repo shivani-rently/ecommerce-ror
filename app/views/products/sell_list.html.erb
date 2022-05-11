@@ -1,17 +1,27 @@
 <div class="wrapper">
 <h3>Your Selling History</h3>
-<div class="list-wrapper">
-<% @products.each do |product| %>
-    <div>
-        <div>Product Id: <%= product.id %></div>
-        <div>Product Name: <%= product.name %></div>
-        <% if product.status? %>
-            <div>Status: Not Sold Yet</div>
-        <% else %>
-            <div>Status: Sold</div>
+<% if @products.count > 0 %>
+<div class="product-table">
+    <table>
+        <tr>
+            <th>Product Id</th>           
+            <th>Product Name</th>
+            <th>Status</th>       
+            <th></th>
+        </tr>
+        <% @products.each do |product| %>
+            <tr>
+                <td><%= product.id %></td>   
+                <td><%=product.name %></td>
+                <% if product.status? %>
+                    <td>Not Sold Yet</td>
+                <% else %>
+                    <td>Sold</td>
+                <% end %>
+                <td><%= link_to "View", "/products/#{product.id}/sell" %></td>
+            </tr>
         <% end %>
-    <%= link_to "View Product Details", "/products/#{product.id}/sell" %><br><br>
-    </div>
-<% end %>
+    </table>
 </div>
+<% end %>
 </div>

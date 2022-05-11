@@ -1,4 +1,5 @@
 <div class="wrapper">
+<h3>Product Details</h3>
 <%= render "product_details", product: @product %>
 <div class="form">
 <%= form_with url: "/products/#{@product.id}/buy", method: :put do |form| %>

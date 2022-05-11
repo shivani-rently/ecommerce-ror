@@ -6,6 +6,16 @@ h3 {
     text-align: center;
 }
 
+.product-table {
+    display: flex;
+    justify-content: center;
+}
+
+table, tr {
+    border: 1px solid;
+    text-align: center;
+}
+
 .container {
     height: calc(100% - 60px);
     display: flex;

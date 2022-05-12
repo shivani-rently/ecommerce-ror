@@ -1,0 +1,8 @@
+<p>
+    <% if current_user.id == feedback.user_id %>
+        <strong>You:</strong>
+    <% else %>
+        <strong>User:</strong>
+    <% end %>
+    <%= feedback.comment %>
+</p>

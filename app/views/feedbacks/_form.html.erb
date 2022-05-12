@@ -1,0 +1,8 @@
+<%= form_with model: [ @product, @product.feedbacks.build ] do |form| %>
+    <p>
+        <%= form.text_field :comment %>
+    </p>
+    <p>
+        <%= form.submit "Submit" %>
+    </p>
+<% end %>

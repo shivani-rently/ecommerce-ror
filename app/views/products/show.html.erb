@@ -5,6 +5,12 @@
         <div class="detail">Product Category: <span><%= @product.category %></span></div>
         <div class="detail">Product Price: <span><%= @product.price %></span></div>
         <div class="detail">No. Of Likes: <span><%= @product.liked_users.count %></span></div>
+        <% if @product.feedbacks.count != 0 %>
+            <h4>Reviews</h4>
+            <%= render @product.feedbacks %>
+        <% end %>
+        <h4>Add Review:</h4>
+        <%= render 'feedbacks/form' %>
         <%= link_to "Go Back", "/orders" %>
     </div>
 </div>

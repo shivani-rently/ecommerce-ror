@@ -17,6 +17,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :ordered_products, through:  :orders, source:  :product
+  has_many :feedbacks
   validates :name, presence: true, length: { maximum: 20 }
   validates :email, presence: true, format: { with: EMAIL_FORMAT }
   validates :password, presence: true, format: { with: PASSWORD_FORMAT }

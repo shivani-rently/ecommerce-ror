@@ -1,4 +1,7 @@
+<div class="wrapper">
+<h3>Product Details</h3>
 <%= render "product_details", product: @product %>
+<div class="form">
 <%= form_with url: "/products/#{@product.id}/buy", method: :put do |form| %>
     <div style="width: 340px; margin: 0 auto;">
         <%= form.label "Quantity: ", class: 'labelName' %>
@@ -11,5 +14,13 @@
 <% else %>
 <%= button_to "Like", "/api/likes", method: :post, params: {id: @product.id} %>
 <% end %>
+</div>
 <br>
+<div style="width: 340px; margin: 0 auto;">
+    <% if @product.feedbacks.count != 0 %>
+        <h4>Reviews</h4>
+        <%= render @product.feedbacks %>
+    <% end %>
 <%= link_to "Go Back", "/products?type=buy" %>
+</div>
+</div>

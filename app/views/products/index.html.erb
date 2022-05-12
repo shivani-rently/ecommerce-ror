@@ -1,20 +1,23 @@
-<div class="wrapper">
 <h3>Products List</h3>
-<div class="list-wrapper">
-<% @products.each do |product| %>
-    <% if params[:type] == "buy" %>
-        <div class="product">
-            <div class="detail">Product Name: <span><%= product.name %></span></div>
-            <div class="detail">Product Category: <span><%= product.category %></span></div>
-            <%= link_to "View Product Details",  "/products/#{product.id}/buy" %>
-        </div>
-    <% elsif params[:type] == "sell" %>
-        <a href='<%= "/products/#{product.id}/sell" %>'> <%= product.name %></a><br>
-    <% end %>
-<% end %>
-<br>
-<% if params[:type] == "sell" %>
-<%= link_to "Sell New Product", "/products/new" %>
-<br>
-<% end %>
+<% if @products.count > 0 %>
+<div class="container" style="align-items: flex-start">
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Product Name </th>           
+      <th scope="col">Product Category </th>       
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  </tbody>
+ <% @products.each do |product| %>
+  <tr scope="row">
+    <td><%= product.name%></td>   
+    <td><%=product.category %></td>
+    <td><%= link_to "View", "/products/#{product.id}/buy" %></td>
+  </tr>
+  <% end %>
+  </tbody>
+</table>
 </div>
+<% end %>

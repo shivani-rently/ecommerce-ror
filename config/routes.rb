@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   namespace :api do
-    resources :likes, only: [:create, :show, :index]
+    resources :likes, only: [:create, :show, :index, :destroy]
   end
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

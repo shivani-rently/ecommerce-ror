@@ -9,8 +9,10 @@
     </div>
     <%= form.submit "Buy" %>
 <% end %>
+</div>
+<div style="width: 340px; margin: 10px auto;">
 <% if @like != [] %>
-<%= button_to "Unlike", "/api/likes", method: :post, params: {id: @product.id} %>
+<%= button_to "Unlike", "/api/likes/#{@product.id}", method: :delete %>
 <% else %>
 <%= button_to "Like", "/api/likes", method: :post, params: {id: @product.id} %>
 <% end %>

@@ -11,19 +11,13 @@ class Api::LikesController < ApplicationController
 
   def create
     begin
-      like = Like.find_by(product_id: params[:id], user_id: current_user.id)
-      if like
-        like.destroy
-        render json: {},status: 200
-      else
         like = Like.create(user_id: current_user.id, product_id: params[:id])
         if like.save
           render json: like, status: 200 
         end
-      end
     rescue => exception
       puts exception
-      render json: {error: exception}
+      render json: {error: "Something went wrong"}, status: 500
     end
   end
 
@@ -33,9 +27,15 @@ class Api::LikesController < ApplicationController
     render json: likes, status: 200
   end
 
-  def destroy(like)
-    like.destroy!
-    render status: 200
+  def destroy
+    begin
+      like = Like.find_by(product_id: params[:id], user_id: current_user.id)
+      like.destroy!
+      render json: {status: "true"},status: 200
+    rescue => exception
+      puts exception
+      render json: {error: "Something went wrong"}, status: 500
+    end
   end
 
 end

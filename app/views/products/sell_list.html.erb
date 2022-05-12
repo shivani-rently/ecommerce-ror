@@ -1,16 +1,19 @@
 <div class="wrapper">
 <h3>Your Selling History</h3>
 <% if @products.count > 0 %>
-<div class="product-table">
-    <table>
+<div class="container" style="align-items: flex-start">
+<table class="table table-hover">
+    <thead>
         <tr>
-            <th>Product Id</th>           
-            <th>Product Name</th>
-            <th>Status</th>       
-            <th></th>
+            <th scope="col">Product Id</th>           
+            <th scope="col">Product Name</th>
+            <th scope="col">Status</th>       
+            <th scope="col"></th>
         </tr>
+        </thead>
+        <tbody>
         <% @products.each do |product| %>
-            <tr>
+            <tr scope="row">
                 <td><%= product.id %></td>   
                 <td><%=product.name %></td>
                 <% if product.status? %>
@@ -21,6 +24,7 @@
                 <td><%= link_to "View", "/products/#{product.id}/sell" %></td>
             </tr>
         <% end %>
+        </tbody>
     </table>
 </div>
 <% end %>

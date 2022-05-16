@@ -6,12 +6,11 @@ class Api::ProductsController < Api::ApplicationController
     if params[:type] == "buy"
       products = Product.where(status: true, isAvailable: true).where.not(user_id: @current_user.id)
     elsif params[:type] == "sell"
-      products = user.products.where(user_id: @current_user.id)
+      products = @current_user.products
     end
       render json: {data: products, status: true}
     rescue => exception
-      puts exception
-      render json: {error: "Something went wrong", status: false}, status: 500
+      render json: {error: exception, status: false}, status: 500
     end
   end
 
@@ -24,8 +23,7 @@ class Api::ProductsController < Api::ApplicationController
         render json: {error: "Invalid product id",status: false}, status: 400
       end
     rescue => exception
-      puts exception
-      render json: {error: "Something went wrong", status: false}, status: 500
+      render json: {error: exception, status: false}, status: 500
     end
   end
 
@@ -38,8 +36,7 @@ class Api::ProductsController < Api::ApplicationController
         render json: {error: "Failed to create product", status: false}, status: 400
       end
     rescue => exception
-      puts exception
-      render json: {error: "Something went wrong", status:false}, status: 500
+      render json: {error: exception, status:false}, status: 500
     end
   end
 
@@ -54,8 +51,7 @@ class Api::ProductsController < Api::ApplicationController
       render json: {error: "Invalid product id"}, status: 400
     end
     rescue => exception
-      puts exception
-      render json: {error: "Something went wrong", status:false}, status: 500
+      render json: {error: exception, status:false}, status: 500
     end
   end
 
@@ -69,8 +65,7 @@ class Api::ProductsController < Api::ApplicationController
         render json: {error: "Invalid product id", status: false}, status: 400
       end
     rescue => exception
-      puts exception
-      render json: {error: "Something went wrong", status:false}, status: 500
+      render json: {error: exception, status:false}, status: 500
     end
   end
 

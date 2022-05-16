@@ -88,6 +88,8 @@ ActiveRecord::Schema.define(version: 2022_05_16_043032) do
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
+<<<<<<< HEAD
+=======
   create_table "oauth_access_tokens", force: :cascade do |t|
     t.bigint "resource_owner_id"
     t.bigint "application_id", null: false
@@ -116,6 +118,7 @@ ActiveRecord::Schema.define(version: 2022_05_16_043032) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
+>>>>>>> 768189d1105cfe3c87542c375624ea1055d5d290
   create_table "order_histories", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -184,7 +187,10 @@ ActiveRecord::Schema.define(version: 2022_05_16_043032) do
   add_foreign_key "feedbacks", "users"
   add_foreign_key "likes", "products"
   add_foreign_key "likes", "users"
+<<<<<<< HEAD
+=======
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+>>>>>>> 768189d1105cfe3c87542c375624ea1055d5d290
   add_foreign_key "orders", "products"
   add_foreign_key "orders", "users"
   add_foreign_key "products", "users"

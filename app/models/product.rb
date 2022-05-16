@@ -3,6 +3,8 @@ class Product < ApplicationRecord
     has_many :orders
     has_many :users, through: :orders    
     has_many :feedbacks
+    has_many :likes, dependent: :destroy
+    has_many :liked_users, through: :likes, source: :user
 
     validates :name, presence: true
     validates :category, presence: true

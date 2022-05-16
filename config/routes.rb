@@ -2,10 +2,17 @@ Rails.application.routes.draw do
   use_doorkeeper do
     skip_controllers :authorizations, :applications, :authorized_applications
   end
+  namespace :api do
+    resources :users, only: [:create]
+    resources :products, only: [:create, :show, :index, :destroy, :update]
+    resources :likes, only: [:create, :show, :index, :destroy]
+    resources :orders, only: :index
+  end
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+  
   devise_for :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  
   root "products#home"
 
   get "/products/:id/sell", to: "products#sell_details"

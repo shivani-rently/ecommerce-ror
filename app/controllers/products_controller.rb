@@ -47,6 +47,7 @@ class ProductsController < ApplicationController
 
   def buy_details
     @product = Product.find(params[:id])
+    @like = current_user.likes.where(product_id: @product.id)
   end
 
   def edit

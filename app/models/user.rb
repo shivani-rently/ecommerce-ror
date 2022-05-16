@@ -6,11 +6,17 @@ class User < ApplicationRecord
   EMAIL_FORMAT = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
 
   after_commit :create_wallet, on: :create
+
   has_many :products
   has_one :wallet
   has_many :orders, dependent: :destroy
+  has_many :ordered_products, through:  :orders, source:  :product
+  has_many :likes, dependent: :destroy
+  has_many :liked_products, through: :likes, source: :product
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
   has_many :ordered_products, through:  :orders, source:  :product
   has_many :feedbacks
   validates :name, presence: true, length: { maximum: 20 }

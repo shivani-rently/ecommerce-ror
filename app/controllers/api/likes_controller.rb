@@ -1,8 +1,9 @@
-class Api::LikesController < ApplicationController
+class Api::LikesController < Api::ApplicationController
+  before_action :current_user
 
   def index
     begin
-      likes = current_user.likes
+      likes = @current_user.likes
       render json: likes, status: 200
     rescue => exception
       render json: {error: "Error fetching details"}
@@ -11,7 +12,7 @@ class Api::LikesController < ApplicationController
 
   def create
     begin
-        like = Like.create(user_id: current_user.id, product_id: params[:id])
+        like = Like.create(user_id: @current_user.id, product_id: params[:id])
         if like.save
           render json: like, status: 200 
         end
@@ -29,7 +30,7 @@ class Api::LikesController < ApplicationController
 
   def destroy
     begin
-      like = Like.find_by(product_id: params[:id], user_id: current_user.id)
+      like = Like.find_by(product_id: params[:id], user_id: @current_user.id)
       like.destroy!
       render json: {status: "true"},status: 200
     rescue => exception

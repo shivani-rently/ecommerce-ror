@@ -1,14 +1,12 @@
 Rails.application.routes.draw do
-  namespace :api do
-    resources :products, only: [:create, :show, :index, :destroy, :update]
-  end
-  namespace :api do
-    resources :orders, only: :index
-  end
-  namespace :api do
-    resources :likes, only: [:create, :show, :index, :destroy]
   use_doorkeeper do
     skip_controllers :authorizations, :applications, :authorized_applications
+  end
+  namespace :api do
+    resources :users, only: [:create]
+    resources :products, only: [:create, :show, :index, :destroy, :update]
+    resources :likes, only: [:create, :show, :index, :destroy]
+    resources :orders, only: :index
   end
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

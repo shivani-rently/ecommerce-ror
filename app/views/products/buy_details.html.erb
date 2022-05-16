@@ -1,6 +1,6 @@
 <div class="wrapper">
     <h3>Product Details</h3>
-    <%= render "product_details", product: @product %>
+    <%= render "product_details", product: @product, show_status: false %>
     <div class="form">
         <%= form_with url: "/products/#{@product.id}/buy", method: :put do |form| %>
             <div style="width: 340px; margin: 10px auto;" class="input-group">

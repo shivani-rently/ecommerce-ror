@@ -1,11 +1,12 @@
-class Api::ProductsController < ApplicationController
+class Api::ProductsController < Api::ApplicationController
+  before_action :current_user
+
   def index
     begin
     if params[:type] == "buy"
-      products = Product.where(status: true, isAvailable: true).where.not(user_id: params[:userid])
+      products = Product.where(status: true, isAvailable: true).where.not(user_id: @current_user.id)
     elsif params[:type] == "sell"
-      user = User.find(params[:userid])
-      products = user.products.where(user_id: user.id)
+      products = user.products.where(user_id: @current_user.id)
     end
       render json: {data: products, status: true}
     rescue => exception
@@ -30,7 +31,7 @@ class Api::ProductsController < ApplicationController
 
   def create
     begin
-      @product = Product.create(name: params["name"], category: params["category"], price: params["price"], status: true, user_id: params["userid"], quantity: params["quantity"], isAvailable: true)
+      @product = Product.create(name: params["name"], category: params["category"], price: params["price"], status: true, user_id: @current_user.id, quantity: params["quantity"], isAvailable: true)
       if @product.save
         render json: {status: true}, status: 200
       else 
@@ -46,11 +47,8 @@ class Api::ProductsController < ApplicationController
     begin
     product = Product.find(params[:id])
     if product
-      puts "1"
       product.update(product_params)
-      puts "2"
       product.update_attribute(:status, product.quantity > 0)
-      puts "3"
       render json: {status: true}, status: 200
     else
       render json: {error: "Invalid product id"}, status: 400

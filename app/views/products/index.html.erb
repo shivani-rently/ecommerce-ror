@@ -5,7 +5,8 @@
   <thead>
     <tr>
       <th scope="col">Product Name </th>           
-      <th scope="col">Product Category </th>       
+      <th scope="col">Product Category </th>        
+      <th scope="col">Price </th>      
       <th scope="col"></th>
     </tr>
   </thead>
@@ -14,6 +15,7 @@
   <tr scope="row">
     <td><%= product.name%></td>   
     <td><%=product.category %></td>
+    <td><%=product.price %></td>
     <td><%= link_to "View", "/products/#{product.id}/buy" %></td>
   </tr>
   <% end %>

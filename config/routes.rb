@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   end
   namespace :api do
     resources :likes, only: [:create, :show, :index, :destroy]
+  use_doorkeeper do
+    skip_controllers :authorizations, :applications, :authorized_applications
   end
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

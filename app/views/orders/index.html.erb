@@ -6,7 +6,8 @@
   <thead>
         <tr>
             <th scope="col">Order Id</th>           
-            <th scope="col">Quantity</th>     
+            <th scope="col">Product Name</th>          
+            <th scope="col">Quantity</th>    
             <th scope="col"></th>
         </tr>
     </thead>
@@ -14,6 +15,7 @@
         <% @orders.each do |order| %>
             <tr cope="row">
                 <td><%= order.id %></td>   
+                <td><%= order.product.name %></td>
                 <td><%= order.quantity %></td>
                 <td><%= link_to "View", "/products/#{order.product_id}" %></td>
             </tr>

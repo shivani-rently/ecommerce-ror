@@ -99,6 +99,8 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    doorkeeper (5.5.4)
+      railties (>= 5)
     erubi (1.10.0)
     ffi (1.15.5)
     formtastic (4.0.0)
@@ -282,6 +284,7 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   devise
+  doorkeeper
   jbuilder (~> 2.7)
   listen (~> 3.3)
   paperclip (~> 6.1)

@@ -1,8 +1,8 @@
-<div class="form">
+<div class="form-group form">
 <%= form_with model: @product do |form| %>
   <div>
     <%= form.label :name %><br>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, class: 'form-control' %>
     <% @product.errors[:name].any? %>
       <% @product.errors[:name].each do |message| %>
         <div><%= message %></div>
@@ -11,7 +11,7 @@
 
   <div>
     <%= form.label :category %><br>
-    <%= select_tag(:category, options_for_select(['Women Accessories','Electronics','Footwear','Electrical Appliances', 'School Supplies'],@product.category), {:class => 'dropdown'}) %>
+    <%= select_tag(:category, options_for_select(['Women Accessories','Electronics','Footwear','Electrical Appliances', 'School Supplies'],@product.category), {:class => 'dropdown form-control'}) %>
     <% @product.errors[:category].any? %>
       <% @product.errors[:category].each do |message| %>
         <div><%= message %></div>
@@ -20,7 +20,7 @@
 
   <div>
     <%= form.label :price %><br>
-    <%= form.text_field :price %>
+    <%= form.text_field :price, class: 'form-control' %>
     <% @product.errors[:price].any? %>
       <% @product.errors[:price].each do |message| %>
         <div><%= message %></div>
@@ -28,14 +28,14 @@
   </div>
   <div>
     <%= form.label :quantity %><br>
-    <%= form.text_field :quantity %>
+    <%= form.text_field :quantity, class: 'form-control' %>
     <% @product.errors[:quantity].any? %>
       <% @product.errors[:quantity].each do |message| %>
         <div><%= message %></div>
       <% end %>
   </div>
   <div style="margin-top: 20px">
-    <%= form.submit submit_text %>
+    <%= form.submit submit_text, class: 'btn btn-primary' %>
   </div>
 <% end %>
 </div>

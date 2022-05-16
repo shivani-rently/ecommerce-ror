@@ -21,4 +21,9 @@ class User < ApplicationRecord
   def create_wallet
     @wallet = Wallet.create(coins: 2000.0, user_id: id)
   end
+
+  def self.authenticate(email, password)
+    user = User.find_for_authentication(email: email)
+    user&.valid_password?(password) ? user : nil
+  end
 end

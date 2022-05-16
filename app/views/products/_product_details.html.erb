@@ -1,6 +1,15 @@
-<div class="product">
-    <div class="detail">Product Name: <span><%= product.name %></span></div>
-    <div class="detail">Product Category: <span><%= product.category %></span></div>
-    <div class="detail">Product Price: <span><%= product.price %></span></div>
-    <div class="detail">Availability: <span><%= product.quantity %></span></div>
+<div class="card product" style="width: 340px;">
+  <div class="card-body">
+    <h5 class="card-title"><%= product.name %></h5>
+    <h6 class="card-subtitle mb-2 text-muted"><%= product.category %></h6>
+    <p class="card-text">Price: <%= product.price %></p>
+    <p class="card-text">Availability: <%= product.quantity %></p>
+    <% if show_status %>
+      <% if @product.status? %>
+        <p class="card-text">Status: Not Sold Yet</p>
+      <% else %>
+        <p class="card-text">Status: Sold</p>
+      <% end %>
+    <% end %>
+  </div>
 </div>

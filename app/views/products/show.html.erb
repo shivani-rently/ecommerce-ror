@@ -1,15 +1,20 @@
 <div class="wrapper">
     <h3>Product Details</h3>
-    <div class="product">
-        <div class="detail">Product Name: <span><%= @product.name %></span></div>
-        <div class="detail">Product Category: <span><%= @product.category %></span></div>
-        <div class="detail">Product Price: <span><%= @product.price %></span></div>
-        <% if @product.feedbacks.count != 0 %>
-            <h4>Reviews</h4>
-            <%= render @product.feedbacks %>
-        <% end %>
-        <h4>Add Review:</h4>
-        <%= render 'feedbacks/form' %>
+    <div class="card product" style="width: 340px;">
+        <div class="card-body">
+            <h5 class="card-title"><%= @product.name %></h5>
+            <h6 class="card-subtitle mb-2 text-muted"><%= @product.category %></h6>
+            <p class="card-text">Price: <%= @product.price %></p>
+        </div>
+    </div>
+    <% if @product.feedbacks.count != 0 %>
+    <div style="width: 340px; margin: 0 auto;">
+        <h4>Reviews</h4>
+        <%= render @product.feedbacks %>
+    </div>
+    <% end %>
+    <%= render 'feedbacks/form' %>
+    <div  style= 'width: 340px; margin: 0 auto;'>
         <%= link_to "Go Back", "/orders" %>
     </div>
 </div>

@@ -1,8 +1,8 @@
 <%= form_with model: [ @product, @product.feedbacks.build ] do |form| %>
-    <p>
-        <%= form.text_field :comment %>
-    </p>
-    <p>
-        <%= form.submit "Submit" %>
-    </p>
+    <div style="width: 340px; margin: 10px auto;" class="input-group">
+        <%= form.text_field :comment, class: 'form-control', placeholder: 'Add Review' %>
+        <div class="input-group-append">            
+            <%= form.submit "Add", class: 'btn btn-outline-primary' %>
+        </div>
+    </div>
 <% end %>

@@ -1,21 +1,22 @@
 <div class="wrapper">
-<h3>Product Details</h3>
-<%= render "product_details", product: @product %>
-<div class="form">
-<%= form_with url: "/products/#{@product.id}/buy", method: :put do |form| %>
+    <h3>Product Details</h3>
+    <%= render "product_details", product: @product %>
+    <div class="form">
+        <%= form_with url: "/products/#{@product.id}/buy", method: :put do |form| %>
+            <div style="width: 340px; margin: 10px auto;" class="input-group">
+                <%= form.text_field :quantity, class: 'form-control', placeholder: 'Quantity' %>
+            <div class="input-group-append">
+                <%= form.submit "Buy", class: 'btn btn-outline-primary' %>
+            </div>
+                        </div>
+        <% end %>
+    </div>  
+    <br>
     <div style="width: 340px; margin: 0 auto;">
-        <%= form.label "Quantity: ", class: 'labelName' %>
-        <%= form.text_field :quantity, class: 'fieldName' %><br>
+        <% if @product.feedbacks.count != 0 %>
+            <h4>Reviews</h4>
+            <%= render @product.feedbacks %>
+        <% end %>
+        <%= link_to "Go Back", "/products?type=buy" %>
     </div>
-    <%= form.submit "Buy" %>
-<% end %>
-</div>
-<br>
-<div style="width: 340px; margin: 0 auto;">
-    <% if @product.feedbacks.count != 0 %>
-        <h4>Reviews</h4>
-        <%= render @product.feedbacks %>
-    <% end %>
-<%= link_to "Go Back", "/products?type=buy" %>
-</div>
 </div>

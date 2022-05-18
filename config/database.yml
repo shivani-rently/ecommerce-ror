@@ -36,7 +36,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: e_commerce
+  database: e_commerce_test
   pool: 5
   username: shivani
   password: shivani@123

@@ -27,7 +27,9 @@ class ProductsController < ApplicationController
 
   def index
     if params[:type] == "buy"
-      @products = Product.where(status: true, isAvailable: true).where.not(user_id: current_user.id)
+      # @products = Product.where(status: true, isAvailable: true).where.not(user_id: current_user.id)
+
+    @products = Product.with_less_price
     elsif params[:type] == "sell"
       @products = current_user.products.where(user_id: current_user.id)
     end
@@ -75,6 +77,9 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     if quantity == ""
       flash.alert = "Quantity Cannot Be Empty"
+      redirect_to "/products/#{@product.id}/buy"
+    elsif quantity.to_i == 0
+      flash.alert = "Invalid quantity"
       redirect_to "/products/#{@product.id}/buy"
     elsif quantity.to_i > @product.quantity
       flash.alert = "Required Quantity Not Available"

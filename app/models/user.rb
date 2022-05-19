@@ -4,6 +4,7 @@ class User < ApplicationRecord
   
   PASSWORD_FORMAT = /\A(?=.{6,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[[:^alnum:]])/x
   EMAIL_FORMAT = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+  MOBILE_FORMAT = /\d[0-9]\)*\z/
 
   after_commit :create_wallet, on: :create
 
@@ -22,6 +23,7 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 20 }
   validates :email, presence: true, format: { with: EMAIL_FORMAT }
   validates :password, presence: true, format: { with: PASSWORD_FORMAT }
+  validates :mobile, format: { with: MOBILE_FORMAT }, length: { minimum: 10, maximum: 10 }, allow_blank: true
 
 
   def create_wallet

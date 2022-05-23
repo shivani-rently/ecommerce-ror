@@ -26,12 +26,13 @@ class ProductsController < ApplicationController
   end
 
   def index
-    if params[:type] == "buy"
-      # @products = Product.where(status: true, isAvailable: true).where.not(user_id: current_user.id)
-
-    @products = Product.with_less_price
-    elsif params[:type] == "sell"
-      @products = current_user.products.where(user_id: current_user.id)
+    puts params
+    @products = Product.where(status: true, isAvailable: true).where.not(user_id: current_user.id)
+    if params.has_key?(:category)
+      @products = @products.filter_by_category(params[:category])
+    end
+    if params.has_key?(:price)
+      @products = @products.filter_by_price(params[:price])
     end
   end
 

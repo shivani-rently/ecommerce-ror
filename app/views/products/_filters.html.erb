@@ -1,0 +1,15 @@
+<div>
+<%= form_with model: @product, url: '/products', method: :get do |form| %>
+        <%= form.label :category %>
+        <%= select_tag(:category, options_for_select(['Women Accessories','Electronics','Footwear','Electrical Appliances', 'School Supplies']), {:class => 'dropdown form-control', :style => "width: 200px;"}, {:prompt => 'Select Category'}) %>
+  <%# <div>
+  <%= form.label "Max Price" %>
+  <%# 20<%= range_field_tag :price, in: 20...100, step: 1 %>
+<%# <div id='target'></div>
+  </div>  %> 
+    <div style="margin-top: 20px">
+        <%= form.submit "Filter", class: 'btn btn-primary' %>
+        <%= link_to "clear", "/products", method: :get%>
+</div>
+<% end %>
+</div>

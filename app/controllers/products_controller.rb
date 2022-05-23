@@ -26,11 +26,7 @@ class ProductsController < ApplicationController
   end
 
   def index
-    if params[:type] == "buy"
       @products = Product.where(status: true, isAvailable: true).where.not(user_id: current_user.id)
-    elsif params[:type] == "sell"
-      @products = current_user.products.where(user_id: current_user.id)
-    end
   end
 
   def sell_list

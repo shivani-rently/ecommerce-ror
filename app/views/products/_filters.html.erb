@@ -1,15 +1,39 @@
-<div>
-<%= form_with model: @product, url: '/products', method: :get do |form| %>
+<div style="width: 20%; display: flex; justify-content: center; align-items: center">
+<%= form_with url: '/products', method: :get,  id: "filter", name: "filter" do |form| %>
         <%= form.label :category %>
-        <%= select_tag(:category, options_for_select(['Women Accessories','Electronics','Footwear','Electrical Appliances', 'School Supplies']), {:class => 'dropdown form-control', :style => "width: 200px;"}, {:prompt => 'Select Category'}) %>
-  <%# <div>
-  <%= form.label "Max Price" %>
-  <%# 20<%= range_field_tag :price, in: 20...100, step: 1 %>
-<%# <div id='target'></div>
-  </div>  %> 
+        <%= select_tag(:category, options_for_select(['Women Accessories','Electronics','Footwear','Electrical Appliances', 'School Supplies'],params[:category]), {:class => 'dropdown form-control', :style => "width: 200px;border-radius: 14px"}) %>
+        <br><br>
+  <%= form.label "Max Price " %> <span id="value"></span> <br>
+  20 <%= form.range_field :price, :in => 0..100, :step => '10',id: "price",name:"price", :value => params[:price] %> 100
     <div style="margin-top: 20px">
-        <%= form.submit "Filter", class: 'btn btn-primary' %>
+        <%= form.submit "Filter", class: 'btn btn-primary', style: 'height: 30px;padding: 0 13px;border-radius: 24px;' %>
         <%= link_to "clear", "/products", method: :get%>
 </div>
 <% end %>
 </div>
+<script>
+let isDirty = false;
+let isCategory = false;
+ $('#price').click(function(e){
+   isDirty=true;
+   console.log(e.target.value);
+   $('#value').text(e.target.value);
+  });
+  $('#category').click(function(){
+    isCategory = true;
+  })
+  $('#filter').submit(function(e){
+    e.preventDefault();
+    console.log(e);
+    if(!isCategory){
+      $('#category').val("");
+    }
+    if(!isDirty){
+      console.log($("#filter"))
+      $("#price").val(0);
+      console.log($("#price").val());
+    }
+    $("#filter").off("submit")
+    $(this).submit();
+  })
+  </script>

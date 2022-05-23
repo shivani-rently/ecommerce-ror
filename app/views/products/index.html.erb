@@ -1,6 +1,8 @@
+<div style="display: flex;">
+<%= render "filters", product: @product%>
+<div style="width: 70%">
 <h3>Products List</h3>
 <% if @products.count > 0 %>
-<%= render "filters", product: @product%>
 <div class="container" style="align-items: flex-start">
 <table class="table table-hover">
   <thead>
@@ -24,3 +26,5 @@
 </table>
 </div>
 <% end %>
+</div>
+</div>

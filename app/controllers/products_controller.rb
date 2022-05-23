@@ -31,7 +31,7 @@ class ProductsController < ApplicationController
     if params.has_key?(:category)
       @products = @products.filter_by_category(params[:category])
     end
-    if params.has_key?(:price)
+    if params.has_key?(:price) && params[:price].to_i != 0
       @products = @products.filter_by_price(params[:price])
     end
   end

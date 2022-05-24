@@ -35,6 +35,7 @@ RSpec.describe User, :type => :model do
     end
 
     it "has unique email" do
+        user = create(:user, email: "test@gmail.com")
         subject.email = "test@gmail.com"
         expect(subject).to_not be_valid
     end

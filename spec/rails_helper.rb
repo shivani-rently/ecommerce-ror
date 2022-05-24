@@ -66,7 +66,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, :type => :controller
   config.include FactoryBot::Syntax::Methods
   config.extend ControllerMacros, :type => :controller
-    Shoulda::Matchers.configure do |config|
+  Shoulda::Matchers.configure do |config|
     config.integrate do |with|
       # Choose a test framework:
       with.test_framework :rspec

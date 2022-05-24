@@ -1,29 +1,32 @@
 require 'rails_helper'
 
 RSpec.describe Product, :type => :model do
+    subject {
+        build(:product)
+    }
+
     it "is valid with valid attributes" do
-        product = create(:product)
-        expect(product).to be_valid
+        expect(subject).to be_valid
     end
 
     it "is not valid without name attribute" do
-        product = build(:product, name: nil)
-        expect(product).to_not be_valid
+        subject.name = nil
+        expect(subject).to_not be_valid
     end
 
     it "is not valid without category attribute" do
-        product = build(:product, category: nil)
-        expect(product).to_not be_valid
+        subject.category = nil
+        expect(subject).to_not be_valid
     end
 
     it "is not valid without price attribute" do
-        product = build(:product, price: nil)
-        expect(product).to_not be_valid
+        subject.price = nil
+        expect(subject).to_not be_valid
     end
 
     it "is not valid without invalid price" do
-        product = build(:product, price: 10.0)
-        expect(product).to_not be_valid
+        subject.price = 10.0
+        expect(subject).to_not be_valid
     end
 
     it "is not valid without quantity attribute" do
@@ -32,7 +35,19 @@ RSpec.describe Product, :type => :model do
     end
 
     it "is not valid without invalid quantity" do
-        product = build(:product, quantity: 0)
-        expect(product).to_not be_valid
+        subject.quantity = 0
+        expect(subject).to_not be_valid
     end
+
+    it { should belong_to(:user) }
+
+    it { should have_many(:orders) }
+
+    it { should have_many(:users).through(:orders) }
+
+    it { should have_many(:feedbacks) }
+
+    it { should have_many(:likes) }
+
+    it { should have_many(:liked_users).through(:likes) }
 end

@@ -1,23 +1,31 @@
 require 'rails_helper'
 
 RSpec.describe Feedback, :type => :model do
+    subject {
+        build(:feedback)
+    }
+
     it "is valid with valid attributes" do
-        feedback = create(:feedback)
-        expect(feedback).to be_valid
+        expect(subject).to be_valid
     end
 
     it "is not valid without comment attribute" do
-        feedback = build(:feedback, comment: nil)
-        expect(feedback).to_not be_valid
+        subject.comment= nil
+        expect(subject).to_not be_valid
     end
 
     it "is not valid without user id" do
-        feedback = build(:feedback, user_id: nil)
-        expect(feedback).to_not be_valid
+        subject.user_id = nil
+        expect(subject).to_not be_valid
     end
 
     it "is not valid without product id" do
-        feedback = build(:feedback, product: nil)
-        expect(feedback).to_not be_valid
+        subject.product_id = nil
+        expect(subject).to_not be_valid
     end
+
+    it { should belong_to(:user) }
+
+    it { should belong_to(:product) }
+    
 end

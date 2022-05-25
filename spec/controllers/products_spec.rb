@@ -5,7 +5,7 @@ RSpec.describe ProductsController, :type => :controller do
     create(:product)
   }
 
-    describe "if user is not authenticated then" do
+    context "if user is not authenticated then" do
       it "redirects to signin page" do
         get :home
         expect(response).to have_http_status(302)
@@ -13,7 +13,7 @@ RSpec.describe ProductsController, :type => :controller do
       end
     end
 
-    describe "if user is authenticated then" do
+    context "if user is authenticated then" do
       login_user
       it "renders home view" do
         get :home

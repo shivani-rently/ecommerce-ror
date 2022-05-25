@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FeedbacksController, :type => :controller do
-    describe "user is authenticated" do
+    context "user is authenticated" do
         login_user
         it "creates a new feedback" do
             expect {
@@ -10,7 +10,7 @@ RSpec.describe FeedbacksController, :type => :controller do
       end
     end
 
-      describe "user is not authenticated" do
+      context "user is not authenticated" do
         it "redirects to sign in page" do
             post :create, params: {product_id: create(:product).id, feedback: {comment: "Very nice product"}}
             expect(response).to have_http_status(302)

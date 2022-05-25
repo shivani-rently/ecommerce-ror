@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe OrdersController, :type => :controller do
-    describe "user is authenticated" do
+    context "user is authenticated" do
     login_user
         it "displays list of orders" do
             order = create(:order, user_id: @user_id)
@@ -11,7 +11,7 @@ RSpec.describe OrdersController, :type => :controller do
         end
     end
 
-    describe "user is not authenticated" do
+    context "user is not authenticated" do
         it "redirects to sign in page" do
             get :index
             expect(response).to have_http_status(302)

@@ -5,10 +5,13 @@ class Api::ProductsController < Api::ApplicationController
     begin
     if params[:type] == "buy"
       products = Product.where(status: true, isAvailable: true).where.not(user_id: @current_user.id)
+      render json: {data: products, status: true}
     elsif params[:type] == "sell"
       products = @current_user.products
-    end
       render json: {data: products, status: true}
+    else
+      render json: {error: "Invalid params", status: false}, status: 400
+    end
     rescue => exception
       render json: {error: exception, status: false}, status: 500
     end
@@ -51,6 +54,7 @@ class Api::ProductsController < Api::ApplicationController
       render json: {error: "Invalid product id"}, status: 400
     end
     rescue => exception
+      puts exception
       render json: {error: exception, status:false}, status: 500
     end
   end

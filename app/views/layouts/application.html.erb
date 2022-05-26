@@ -7,6 +7,7 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   </head>
   <body>
   <nav class="navbar navbar-expand-md navbar-dark bg-primary">
@@ -14,7 +15,7 @@
   <div id="navbarColor01">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item <%= active_class("/products?type=buy") %>">
-        <a class="nav-link" href="/products?type=buy">Buy</a>
+        <a class="nav-link" href="/products">Buy</a>
       </li>
       <li class="nav-item <%= active_class("/products/new") %>">
         <a class="nav-link" href="/products/new">Sell</a>

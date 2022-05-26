@@ -10,4 +10,7 @@ class Product < ApplicationRecord
     validates :category, presence: true
     validates :price, presence: true, numericality: { greater_than_or_equal_to: 20.0}
     validates :quantity, presence: true, numericality: { greater_than: 0}, on: :create
+
+    scope :filter_by_category, -> (category) {where("category like ?", category)}
+    scope :filter_by_price, -> (price) {where("price <= ?", price)}
 end

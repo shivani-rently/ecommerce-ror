@@ -26,7 +26,14 @@ class ProductsController < ApplicationController
   end
 
   def index
-      @products = Product.where(status: true, isAvailable: true).where.not(user_id: current_user.id)
+    puts params
+    @products = Product.where(status: true, isAvailable: true).where.not(user_id: current_user.id)
+    if params.has_key?(:category)
+      @products = @products.filter_by_category(params[:category])
+    end
+    if params.has_key?(:price) && params[:price].to_i != 0
+      @products = @products.filter_by_price(params[:price])
+    end
   end
 
   def sell_list
@@ -71,6 +78,9 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     if quantity == ""
       flash.alert = "Quantity Cannot Be Empty"
+      redirect_to "/products/#{@product.id}/buy"
+    elsif quantity.to_i == 0
+      flash.alert = "Invalid quantity"
       redirect_to "/products/#{@product.id}/buy"
     elsif quantity.to_i > @product.quantity
       flash.alert = "Required Quantity Not Available"

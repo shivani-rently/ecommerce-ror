@@ -47,6 +47,28 @@ RSpec.describe "Products", :type => :request do
         expect(response).to have_http_status(500)
     end
 
-    it "creates a new product"
+    it "creates a new product" do
+      expect{ post "/api/products", params: {name: "Pencil Box", category: "School Supplies", price: 40.0,quantity: 3},
+         headers: { 'Authorization': 'Bearer ' + token.token }}.to change(Product, :count).by(+1)
+        expect(response).to have_http_status(200)
+    end
+
+    it "does not create a new product without valid params" do
+      post "/api/products", params: {category: "School Supplies", price: 40.0,quantity: 3},
+         headers: { 'Authorization': 'Bearer ' + token.token }
+        expect(response).to have_http_status(400)
+    end
+
+    it "updates product details successfully" do
+      product = create(:product, quantity: 1, user_id: user.id)
+      put "/api/products/#{product.id}", params: {product: {quantity: 4}}, headers: { 'Authorization': 'Bearer ' + token.token }
+      expect(response).to have_http_status(200)
+    end
+
+    it "deletes a product successfully" do
+      product = create(:product, user_id: user.id)
+      delete "/api/products/#{product.id}", params: {}, headers: { 'Authorization': 'Bearer ' + token.token }
+      expect(response).to have_http_status(200)
+    end
   end
 end

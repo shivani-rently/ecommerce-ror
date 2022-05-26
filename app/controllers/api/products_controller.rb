@@ -54,6 +54,7 @@ class Api::ProductsController < Api::ApplicationController
       render json: {error: "Invalid product id"}, status: 400
     end
     rescue => exception
+      puts exception
       render json: {error: exception, status:false}, status: 500
     end
   end

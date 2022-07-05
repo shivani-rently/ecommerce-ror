@@ -47,15 +47,19 @@ class Api::ProductsController < Api::ApplicationController
     begin
     product = Product.find(params[:id])
     if product
-      product.update(product_params)
-      product.update_attribute(:status, product.quantity > 0)
-      render json: {status: true}, status: 200
+      if product.user_id == @current_user.id
+        product.update(product_params)
+        product.update_attribute(:status, product.quantity > 0)
+        render json: {status: true}, status: 200
+      else
+        render json: {error: "Unauthorized access", status: false}, status: 401
+      end
     else
-      render json: {error: "Invalid product id"}, status: 400
+      render json: {error: "Invalid product id", status: false}, status: 400
     end
     rescue => exception
       puts exception
-      render json: {error: exception, status:false}, status: 500
+      render json: {error: exception, status: false}, status: 500
     end
   end
 
@@ -63,8 +67,12 @@ class Api::ProductsController < Api::ApplicationController
     begin
       product = Product.find(params[:id])
       if product
-        product.destroy!
-        render json: {status: true}, status: 200
+        if product.user_id == @current_user.id
+          product.destroy!
+          render json: {status: true}, status: 200
+        else
+          render json: {error: "Unauthorized access", status: false}, status: 401
+        end
       else
         render json: {error: "Invalid product id", status: false}, status: 400
       end

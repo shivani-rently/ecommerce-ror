@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   
   devise_for :users
   
-  root "products#home"
+  root "products#index"
 
   get "/products/:id/sell", to: "products#sell_details"
   get "/products/:id/buy", to: "products#buy_details"

@@ -14,9 +14,6 @@
   <a class="navbar-brand" href="/">E-Commerce</a>
   <div id="navbarColor01">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item <%= active_class("/products?type=buy") %>">
-        <a class="nav-link" href="/products">Buy</a>
-      </li>
       <li class="nav-item <%= active_class("/products/new") %>">
         <a class="nav-link" href="/products/new">Sell</a>
       </li>
@@ -28,6 +25,10 @@
       </li>
       <div class="spacer" style="flex:1;"></div>
       <% if user_signed_in? %>
+    <li class="nav-item nav-link">
+      Wallet: <%= current_user.wallet.coins %>
+    </li>
+      <div class="spacer" style="flex:1;"></div>
     <li class="nav-item <%= active_class(edit_user_registration_path) %>">
       <%= link_to "Hi, #{current_user.name}", edit_user_registration_path, class: 'nav-link' %>
     </li>
